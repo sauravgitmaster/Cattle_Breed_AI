@@ -1,0 +1,9 @@
+# The API is deployed separately on Render from Backend_new/breedai_public_backend.
+# Keep Vercel focused on the Vite frontend so it does not install the legacy
+# Python / PyTorch backend dependencies at the repository root.
+Backend_new/
+app.py
+requirements.txt
+tnbc3.py
+tnbc6_FINAL_FIXED.py
+__pycache__/
