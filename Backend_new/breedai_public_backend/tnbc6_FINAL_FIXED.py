@@ -3,8 +3,8 @@ import json
 import gc
 import torch
 import torch.nn as nn
-from torchvision import transforms
 from PIL import Image
+import numpy as np
 from huggingface_hub import hf_hub_download
 
 
@@ -333,13 +333,15 @@ class ConvNeXtTiny(nn.Module):
 
 print("\nCreating ConvNeXt-Tiny...")
 
-model = ConvNeXtTiny(
-    num_classes=len(CLASS_NAMES)
-)
-
-# Render's free instance has a 512 MB memory limit.  Half precision cuts the
-# model parameter footprint roughly in half; this model runs inference on CPU.
-model = model.half()
+# Construct parameters directly in FP16.  Creating a FP32 model and converting
+# it afterwards briefly keeps both copies in memory, which exceeds Render
+# Free's 512 MB limit for this model.
+previous_default_dtype = torch.get_default_dtype()
+torch.set_default_dtype(torch.float16)
+try:
+    model = ConvNeXtTiny(num_classes=len(CLASS_NAMES))
+finally:
+    torch.set_default_dtype(previous_default_dtype)
 
 
 # ============================================================
@@ -397,28 +399,16 @@ print("========================================")
 # 11. IMAGE TRANSFORMATION
 # ============================================================
 
-transform = transforms.Compose([
+NORMALIZE_MEAN = torch.tensor([0.485, 0.456, 0.406]).view(3, 1, 1)
+NORMALIZE_STD = torch.tensor([0.229, 0.224, 0.225]).view(3, 1, 1)
 
-    transforms.Resize(
-        (224, 224)
-    ),
 
-    transforms.ToTensor(),
-
-    transforms.Normalize(
-        mean=[
-            0.485,
-            0.456,
-            0.406
-        ],
-
-        std=[
-            0.229,
-            0.224,
-            0.225
-        ]
-    )
-])
+def transform(image):
+    """Resize and normalize without importing the heavyweight torchvision package."""
+    image = image.resize((224, 224))
+    pixels = np.asarray(image, dtype=np.float32) / 255.0
+    tensor = torch.from_numpy(pixels).permute(2, 0, 1)
+    return (tensor - NORMALIZE_MEAN) / NORMALIZE_STD
 
 
 # ============================================================
