@@ -1,5 +1,6 @@
 import os
 import json
+import gc
 import torch
 import torch.nn as nn
 from torchvision import transforms
@@ -336,6 +337,10 @@ model = ConvNeXtTiny(
     num_classes=len(CLASS_NAMES)
 )
 
+# Render's free instance has a 512 MB memory limit.  Half precision cuts the
+# model parameter footprint roughly in half; this model runs inference on CPU.
+model = model.half()
+
 
 # ============================================================
 # 9. LOAD CHECKPOINT
@@ -345,7 +350,9 @@ print("Loading trained weights...")
 
 checkpoint = torch.load(
     model_weight_path,
-    map_location="cpu"
+    map_location="cpu",
+    mmap=True,
+    weights_only=True
 )
 
 state_dict = checkpoint["model_state_dict"]
@@ -371,6 +378,9 @@ model.load_state_dict(
     cleaned_state_dict,
     strict=True
 )
+
+del checkpoint, state_dict, cleaned_state_dict
+gc.collect()
 
 model = model.to(device)
 
@@ -497,6 +507,7 @@ def predict_breed(image_path):
     image_tensor = image_tensor.unsqueeze(0)
 
     image_tensor = image_tensor.to(device)
+    image_tensor = image_tensor.half()
 
 
     with torch.no_grad():
