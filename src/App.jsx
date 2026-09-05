@@ -621,7 +621,7 @@ function App() {
           {/* ================= PRIVACY ================= */}
 
           <p className="privacy-note">
-            Your image is used only to generate this prediction.
+            Please wait 20 secs for the result. Otherwise Re upload.
           </p>
 
         </section>
