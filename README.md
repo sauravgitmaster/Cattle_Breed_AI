@@ -1,23 +1,23 @@
-# 🐄 Cattle Breed AI
+# Cattle Breed AI
 
 AI-powered web application for identifying **Indian cattle and buffalo breeds from images** using deep learning.
 
 The project combines a **React + Vite frontend** with a **Flask + PyTorch backend** to provide breed predictions along with confidence scores and breed information.
 
-## ✨ Features
+## Features
 
-* 🐄 Cattle & buffalo breed identification
-* 🤖 Deep-learning based image classification
-* 📊 Top-3 breed predictions with confidence scores
-* 🧬 Breed information and characteristics
-* 🖼️ Image preview before prediction
-* 📁 JPG, JPEG, PNG and WEBP support
-* 📏 Upload limit of 10 MB
-* ⚡ GPU support with CPU fallback
-* 🌐 Separate frontend and backend deployment
-* ❤️ API health-check endpoint
+* Cattle & buffalo breed identification
+* Deep-learning based image classification
+* Top-3 breed predictions with confidence scores
+* Breed information and characteristics
+* Image preview before prediction
+* JPG, JPEG, PNG and WEBP support
+* Upload limit of 10 MB
+* GPU support with CPU fallback
+* Separate frontend and backend deployment
+* API health-check endpoint
 
-## 🧠 How It Works
+## How It Works
 
 ```text
 Animal Image
@@ -37,7 +37,7 @@ Top-3 Predictions
 Breed Information
 ```
 
-## 🏗️ Tech Stack
+## Tech Stack
 
 | Technology       | Purpose             |
 | ---------------- | ------------------- |
@@ -52,7 +52,7 @@ Breed Information
 | Vercel           | Frontend deployment |
 | Render           | Backend deployment  |
 
-## 📂 Project Structure
+## Project Structure
 
 ```text
 cattle-breed-ai-fixed/
@@ -81,7 +81,7 @@ cattle-breed-ai-fixed/
 └── README.md
 ```
 
-## 🌐 Deployment
+## Deployment
 
 The project uses a split deployment architecture:
 
@@ -98,7 +98,7 @@ The project uses a split deployment architecture:
 └───────────────┘
 ```
 
-## ⚠️ Limitations
+## Limitations
 
 Prediction quality may vary depending on:
 
@@ -111,7 +111,7 @@ Prediction quality may vary depending on:
 
 The confidence score represents the model's prediction probability and should not be considered a guaranteed identification.
 
-## 🔮 Future Scope
+## Future Scope
 
 * [ ] Support more breeds
 * [ ] Improve difficult-image recognition
@@ -122,13 +122,13 @@ The confidence score represents the model's prediction probability and should no
 * [ ] Mobile optimization
 * [ ] Multilingual support
 
-## 🤝 Contributing
+## Contributing
 
 Contributions and suggestions are welcome.
 
 
 ---
 
-### 🐄 Cattle Breed AI
+### Cattle Breed AI
 
 **Computer Vision • Deep Learning • Agriculture • Full-Stack Development**
